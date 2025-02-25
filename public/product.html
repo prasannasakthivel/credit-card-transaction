@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .product-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .product-category {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #28a745;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .buy-btn {
+            background-color: #ff6600;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .buy-btn:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+
+<body>
+
+    
+
+    <h1>Our Products</h1>
+    <div class="product-container" id="productList"></div>
+
+    <script>
+        async function fetchProducts() {
+            const response = await fetch("http://localhost:5000/products");
+            const products = await response.json();
+            const productList = document.getElementById("productList");
+
+            productList.innerHTML = products.map(product =>
+                `<div class="product-card">
+                    <img src="http://localhost:5000${product.image}" alt="${product.name}">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-category">Category: ${product.category}</div>
+                    <div class="product-price">$${product.price}</div>
+                    <div class="product-description">${product.description}</div>
+                      <a href="productDetails.html?id=${product._id}" class="buy-btn"><button class="buy-btn" >Buy Now</button></a>
+                </div>`
+            ).join("");
+        }
+
+        function buyProduct(name, price) {
+            alert(`You selected: ${name} for $${price}. Checkout process coming soon!`);
+        }
+
+        fetchProducts();
+    </script>
+
+</body>
+
+</html>

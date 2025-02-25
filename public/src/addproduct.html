@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        input, button, select { margin: 5px; padding: 10px; }
+        .product-list { margin-top: 20px; }
+        img { width: 100px; height: auto; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Add Product</h2>
+    <input type="text" id="name" placeholder="Product Name">
+    <input type="number" id="price" placeholder="Price">
+    <input type="text" id="description" placeholder="Description">
+    <select id="category">
+        <option value="">Select Category</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Home">Home</option>
+    </select>
+    <input type="file" id="image">
+    <button onclick="addProduct()">Add Product</button>
+
+    <h2>Product List</h2>
+    <div class="product-list" id="productList"></div>
+
+    <script>
+        async function addProduct() {
+            const name = document.getElementById("name").value;
+            const price = document.getElementById("price").value;
+            const description = document.getElementById("description").value;
+            const category = document.getElementById("category").value;
+            const image = document.getElementById("image").files[0];
+
+            if (!name || !price || !description || !category || !image) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("price", price);
+            formData.append("description", description);
+            formData.append("category", category);
+            formData.append("image", image);
+
+            const response = await fetch("http://localhost:5000/add-product", {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                alert("Product added successfully");
+                fetchProducts();
+            } else {
+                alert("Failed to add product");
+            }
+        }
+
+        async function fetchProducts() {
+            const response = await fetch("http://localhost:5000/products");
+            const products = await response.json();
+            const productList = document.getElementById("productList");
+
+            productList.innerHTML = products.map(product => 
+                `<p><strong>${product.name}</strong> - $${product.price} <br> 
+                ${product.description} <br> 
+                Category: ${product.category} <br> 
+                <img src="http://localhost:5000${product.image}" alt="${product.name}">
+                </p>`
+            ).join("");
+        }
+
+        fetchProducts();
+    </script>
+
+</body>
+</html>

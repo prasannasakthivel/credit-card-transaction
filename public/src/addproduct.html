@@ -5,11 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Management</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        input, button, select { margin: 5px; padding: 10px; }
-        .product-list { margin-top: 20px; }
-        img { width: 100px; height: auto; margin-top: 10px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+    
+        h2 {
+            margin: 20px 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: fadeInDown 0.8s ease;
+        }
+    
+        input, button, select {
+            margin: 8px;
+            padding: 12px;
+            width: 280px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ffe0;
+            transform: scale(1.02);
+        }
+    
+        button {
+            background: #00ffe0;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+    
+        button:hover {
+            background: #fff;
+            color: #111;
+            transform: scale(1.07);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+    
+        .product-list {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+    
+        .product-list p {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            width: 260px;
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            animation: fadeInUp 1s ease;
+        }
+    
+        .product-list p:hover {
+            transform: translateY(-10px) scale(1.03);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+    
+        img {
+            width: 100%;
+            height: auto;
+            margin-top: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s ease;
+        }
+    
+        img:hover {
+            transform: scale(1.05) rotate(1deg);
+        }
+    
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
+    
 </head>
 <body>
 

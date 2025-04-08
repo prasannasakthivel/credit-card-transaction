@@ -5,104 +5,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
 
     <style>
-        /* General Styles */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa, #dbeafe);
             margin: 0;
             padding: 0;
             text-align: center;
+            overflow-x: hidden;
         }
 
-        /* Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #333;
+            background: linear-gradient(to right, #333, #444);
             padding: 15px 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             color: #fff;
+            text-shadow: 1px 1px 5px #ff6600;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 25px;
             margin: 0;
             padding: 0;
         }
 
-        .nav-links li {
-            display: inline;
-        }
-
         .nav-links a {
             text-decoration: none;
-            color: white;
+            color: #fff;
             font-size: 18px;
-            transition: color 0.3s;
+            transition: color 0.3s ease;
         }
 
         .nav-links a:hover {
             color: #ff6600;
         }
 
-        /* Product Page */
         .product-container {
             display: flex;
             justify-content: center;
-            padding: 50px 20px;
+            padding: 60px 20px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .product-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 350px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
         }
 
         .product-card img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 12px;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05) rotate(-1deg);
         }
 
         .product-card h2 {
-            font-size: 24px;
-            margin-top: 10px;
+            font-size: 26px;
+            margin-top: 15px;
+            color: #222;
         }
 
         .price {
-            font-size: 20px;
+            font-size: 22px;
             color: #28a745;
             font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .product-card p {
+            font-size: 16px;
+            color: #555;
         }
 
         .buy-btn {
-            background-color: #ff6600;
+            background: linear-gradient(45deg, #ff6600, #ff4500);
             color: white;
-            padding: 10px 15px;
+            padding: 12px 20px;
             text-decoration: none;
             font-size: 18px;
-            border-radius: 5px;
+            border-radius: 8px;
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 20px;
             cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
+            transition: all 0.4s ease;
+            border: none;
         }
 
         .buy-btn:hover {
-            background-color: #ff4500;
+            background: linear-gradient(45deg, #ff4500, #ff6600);
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.9);
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -115,7 +158,6 @@
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="product.html">Products</a></li>
-            
             <li><a href="./src/signup.html">Register</a></li>
         </ul>
     </nav>
@@ -126,7 +168,6 @@
     </div>
 
     <script>
-        // Get Product ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get("id");
 
@@ -151,7 +192,7 @@
                         <h2>${product.name}</h2>
                         <p class="price">$${product.price}</p>
                         <p>${product.description}</p>
-                       <a  href="/faceregister.html" > <button class="buy-btn">Buy Now</button></a>
+                        <a href="/faceregister.html"><button class="buy-btn">Buy Now</button></a>
                     </div>
                 `;
             } catch (error) {

@@ -6,6 +6,9 @@ body {
 }
 
 /* header section starts */
+#togglePassword {
+    cursor: pointer;
+}
 
 header {
     text-align: center;

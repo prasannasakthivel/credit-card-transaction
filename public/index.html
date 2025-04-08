@@ -1,77 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopEase - Home</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShopEase - Home</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(120deg, #f9f9f9, #e0f7fa);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #00796b, #004d40);
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .navbar .logo {
+      font-size: 1.8rem;
+      color: #fff;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #ffd600;
+      left: 0;
+      bottom: -4px;
+      transition: 0.4s;
+    }
+
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem;
+      background: linear-gradient(to right, #ffffff, #e0f7fa);
+      animation: fadeIn 2s ease;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #00796b;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #555;
+    }
+
+    .shop-btn {
+      padding: 0.8rem 2rem;
+      background: #00796b;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .shop-btn:hover {
+      background: #004d40;
+      transform: scale(1.05);
+    }
+
+    /* Featured Section */
+    .featured-products {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .featured-products h2 {
+      font-size: 2.5rem;
+      color: #00796b;
+      margin-bottom: 2rem;
+    }
+
+    .product-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 1rem 0;
+    }
+
+    .product-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: slideUp 1s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .product-price {
+      color: #00796b;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      margin-top: 0.8rem;
+      padding: 0.6rem 1.5rem;
+      background: #004d40;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      transition: background 0.3s;
+    }
+
+    .buy-btn:hover {
+      background: #00796b;
+    }
+
+    /* About Section */
+    .about, .contact {
+      padding: 3rem 2rem;
+      text-align: center;
+      background: #f1f1f1;
+    }
+
+    .about h2, .contact h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #004d40;
+    }
+
+    .about p, .contact p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .social-links a {
+      color: #00796b;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background: #004d40;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes slideUp {
+      from {opacity: 0; transform: translateY(40px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @media screen and (max-width: 600px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .shop-btn {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="logo">ShopEase</div>
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="product.html">Products</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="./src/signup.html">Register</a></li>
-        </ul>
-    </nav>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">ShopEase</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="product.html">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="./src/signup.html">Register</a></li>
+    </ul>
+  </nav>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <h1>Welcome to ShopEase</h1>
-        <p>Your one-stop shop for amazing products at unbeatable prices!</p>
-        <a href="product.html" class="shop-btn">Shop Now</a>
-    </header>
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>Welcome to ShopEase</h1>
+    <p>Your one-stop shop for amazing products at unbeatable prices!</p>
+    <a href="product.html" class="shop-btn">Shop Now</a>
+  </header>
 
-    <!-- Featured Products Section -->
-    <section class="featured-products">
-        <h2>Featured Products</h2>
-        <div class="product-container" id="featuredProducts"></div>
-    </section>
+  <!-- Featured Products Section -->
+  <section class="featured-products">
+    <h2>Featured Products</h2>
+    <div class="product-container" id="featuredProducts"></div>
+  </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <h2>About Us</h2>
-        <p>At ShopEase, we provide top-quality products at affordable prices. Our mission is to make online shopping easy, fast, and enjoyable for everyone.</p>
-    </section>
+  <!-- About Section -->
+  <section id="about" class="about">
+    <h2>About Us</h2>
+    <p>At ShopEase, we provide top-quality products at affordable prices. Our mission is to make online shopping easy, fast, and enjoyable for everyone.</p>
+  </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <h2>Contact Us</h2>
-        <p>Email: support@shopease.com | Phone: +123-456-7890</p>
-        <p>Follow us on:</p>
-        <div class="social-links">
-            <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a>
-        </div>
-    </section>
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>Email: support@shopease.com | Phone: +123-456-7890</p>
+    <p>Follow us on:</p>
+    <div class="social-links">
+      <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 ShopEase. All rights reserved.</p>
-    </footer>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 ShopEase. All rights reserved.</p>
+  </footer>
 
-    <script>
-        async function fetchFeaturedProducts() {
-            const response = await fetch("http://localhost:5000/products");
-            const products = await response.json();
-            const productList = document.getElementById("featuredProducts");
+  <script>
+    async function fetchFeaturedProducts() {
+      try {
+        const response = await fetch("http://localhost:5000/products");
+        const products = await response.json();
+        const productList = document.getElementById("featuredProducts");
 
-            productList.innerHTML = products.slice(0, 4).map(product => 
-                `<div class="product-card">
-                    <img src="http://localhost:5000${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p class="product-price">$${product.price}</p>
-                    <a href="productDetails.html?id=${product._id}" class="buy-btn">View More</a> 
-                </div>`
-            ).join("");
-        }
+        productList.innerHTML = products.slice(0, 4).map(product =>
+          `<div class="product-card">
+              <img src="http://localhost:5000${product.image}" alt="${product.name}">
+              <h3>${product.name}</h3>
+              <p class="product-price">$${product.price}</p>
+              <a href="productDetails.html?id=${product._id}" class="buy-btn">View More</a>
+          </div>`
+        ).join("");
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      }
+    }
 
-        fetchFeaturedProducts();
-    </script>
-
+    fetchFeaturedProducts();
+  </script>
 </body>
 </html>

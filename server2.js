@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const multer = require('multer');
 const path = require('path');
+const { log } = require("console");
 
 const app = express();
 app.use(express.json());
@@ -93,8 +94,11 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
+console.log(email,password);
 
         const user = await User.findOne({ email });
+        console.log(user);
+        
         if (!user) return res.status(400).json({ message: "Invalid email or password!" });
 
         const isMatch = await bcrypt.compare(password, user.password);

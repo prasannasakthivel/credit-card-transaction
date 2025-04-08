@@ -60,7 +60,7 @@
             const products = await response.json();
             const productList = document.getElementById("featuredProducts");
 
-            productList.innerHTML = products.slice(0, 3).map(product => 
+            productList.innerHTML = products.slice(0, 4).map(product => 
                 `<div class="product-card">
                     <img src="http://localhost:5000${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>

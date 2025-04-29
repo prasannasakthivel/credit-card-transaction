@@ -170,6 +170,14 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get("id");
+        let currentProduct = null;
+
+        const userName = JSON.parse(sessionStorage.getItem("user")) ;
+
+        console.log("User Name:", userName);
+
+
+        
 
         async function fetchProduct() {
             if (!productId) {
@@ -186,18 +194,51 @@
                     return;
                 }
 
+                currentProduct = product;
+
                 document.getElementById("product-details").innerHTML = `
                     <div class="product-card">
                         <img src="http://localhost:5000${product.image}" alt="${product.name}">
                         <h2>${product.name}</h2>
                         <p class="price">$${product.price}</p>
                         <p>${product.description}</p>
-                        <a href="/faceregister.html"><button class="buy-btn">Buy Now</button></a>
+                        <button class="buy-btn" onclick="addBooking()">Buy Now</button>
                     </div>
                 `;
             } catch (error) {
                 console.error("Error fetching product:", error);
                 document.getElementById("product-details").innerHTML = "<h2>Error loading product!</h2>";
+            }
+        }
+
+        async function addBooking() {
+            if (!currentProduct) return;
+
+            const bookingData = {
+                userName: userName.fullname,
+                productName: currentProduct.name,
+                quantity: 1,
+                total: currentProduct.price
+            };
+
+            try {
+                const res = await fetch("http://localhost:5000/api/bookings", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                if (res.ok) {
+                    window.location.href = "/faceregister.html";
+                } else {
+                    const result = await res.json();
+                    alert("Booking failed: " + result.error);
+                }
+            } catch (err) {
+                console.error("Booking error:", err);
+                alert("Something went wrong. Try again.");
             }
         }
 

@@ -95,7 +95,17 @@ function loginUser(user) {
         localStorage.setItem('user', JSON.stringify(user));
     }
 
-    window.location.replace("/src/profile.html");
+    
+
+    const userrole=JSON.parse(sessionStorage.getItem('user')).role;
+
+    if (userrole === "admin") {
+        window.location.replace("/src/dashboard.html");
+    }else{
+        window.location.replace("/src/profile.html");
+        
+    }
+
 }
 
 //------------------------------------ ASSIGN THE EVENTS -----------------------------------------//

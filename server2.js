@@ -25,9 +25,23 @@ const UserSchema = new mongoose.Schema({
     email: String,
     phone: String,
     password: String,
+    role: {
+        type: String,
+        default: "user"
+      }
 });
 
 const User = mongoose.model("User", UserSchema);
+
+// models/Booking.js
+const Booking = mongoose.model("Booking", {
+    bookingId: String,
+    userName: String,
+    productName: String,
+    quantity: Number,
+    total: Number,
+  });
+  module.exports = Booking;
 
 
 // Configure Multer
@@ -75,13 +89,13 @@ app.use('/uploads', express.static('./uploads'));
 // Register User
 app.post("/register", async (req, res) => {
     try {
-        const { fullname, username, email, phone, password } = req.body;
+        const { fullname, username, email, phone, password, role = "user"  } = req.body;
 
         const existingUser = await User.findOne({ email });
         if (existingUser) return res.status(400).json({ message: "Account already exists!" });
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ fullname, username, email, phone, password: hashedPassword });
+        const newUser = new User({ fullname, username, email, phone, password: hashedPassword,role });
 
         await newUser.save();
         res.status(201).json({ message: "User registered successfully!" });
@@ -137,6 +151,48 @@ app.post("/add-product", upload.single("image"), async (req, res) => {
 });
 
 
+// routes/stats.js
+app.get("/admin/stats", async (req, res) => {
+    const totalProducts = await Product.countDocuments();
+    const totalBookings = await Booking.countDocuments();
+    const totalRevenue = await Booking.aggregate([
+      { $group: { _id: null, total: { $sum: "$total" } } },
+    ]);
+    const latestBookings = await Booking.find().sort({ _id: -1 }).limit(5);
+  
+    res.json({
+      totalProducts,
+      totalBookings,
+      totalRevenue: totalRevenue[0]?.total || 0,
+      latestBookings,
+    });
+  });
+
+
+  app.post("/api/bookings", async (req, res) => {
+    try {
+      const { userName, productName, quantity, total } = req.body;
+  
+      // Generate unique booking ID
+      const bookingId = `BKG${Date.now()}`;
+  
+      const newBooking = new Booking({
+        bookingId,
+        userName,
+        productName,
+        quantity,
+        total
+      });
+  
+      await newBooking.save();
+      res.status(201).json({ message: "Booking added successfully!", booking: newBooking });
+    } catch (error) {
+      console.error("Booking error:", error);
+      res.status(500).json({ error: "Failed to add booking" });
+    }
+  });
+
+
 // API to fetch products
 app.get("/products", async (req, res) => {
     try {
@@ -159,6 +215,16 @@ app.get("/products/:id", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+
+app.get("/api/bookings", async (req, res) => {
+    try {
+      const bookings = await Booking.find().sort({ _id: -1 });
+      res.json(bookings);
+    } catch (err) {
+      res.status(500).json({ error: "Failed to fetch bookings" });
+    }
+  });
 
 
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Admin Dashboard</h1>
+    
+    <div class="stats">
+      <div class="card" id="productCount">📦 Products: 0</div>
+      <div class="card" id="bookingCount">🧾 Bookings: 0</div>
+      <div class="card" id="revenueCount">💰 Revenue: ₹0</div>
+    </div>
+
+    <h2>Latest Bookings</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="latestBookings">
+        <!-- rows via JS -->
+      </tbody>
+    </table>
+
+    <div class="dashboard-buttons">
+      <a href="addproduct.html" class="btn">➕ Add Product</a>
+      <a href="bookings.html" class="btn">📄 View Bookings</a>
+    </div>
+  </div>
+
+  <script>
+    fetch("http://localhost:5000/admin/stats")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("productCount").innerText = `📦 Products: ${data.totalProducts}`;
+        document.getElementById("bookingCount").innerText = `🧾 Bookings: ${data.totalBookings}`;
+        document.getElementById("revenueCount").innerText = `💰 Revenue: ₹${data.totalRevenue}`;
+
+        const tbody = document.getElementById("latestBookings");
+        data.latestBookings.forEach(b => {
+          const row = `<tr>
+            <td>${b.userName}</td>
+            <td>${b.productName}</td>
+            <td>${b.quantity}</td>
+            <td>₹${b.total}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(err => console.error("Dashboard load error:", err));
+  </script>
+</body>
+</html>

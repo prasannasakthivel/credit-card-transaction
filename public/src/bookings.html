@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Bookings</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <div class="dashboard">
+    <h1>All Bookings</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>User Name</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Total Amount</th>
+        </tr>
+      </thead>
+      <tbody id="bookingTableBody">
+        <!-- Bookings will be populated here -->
+      </tbody>
+    </table>
+
+    <div class="dashboard-buttons">
+      <a href="dashboard.html" class="btn">🏠 Back to Dashboard</a>
+    </div>
+  </div>
+
+  <script>
+    fetch("http://localhost:5000/api/bookings")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById("bookingTableBody");
+        data.forEach(b => {
+          const row = `<tr>
+            <td>${b.bookingId}</td>
+            <td>${b.userName}</td>
+            <td>${b.productName}</td>
+            <td>${b.quantity}</td>
+            <td>₹${b.total}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(err => console.error("Failed to load bookings:", err));
+  </script>
+</body>
+</html>
